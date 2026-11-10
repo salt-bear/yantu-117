@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一条路 · 一栋楼 · 一座馆 | 11.7 研学</title>
+<style>
+  :root{
+    --red:#8C2B27;
+    --red-deep:#6B1F1C;
+    --gold:#A9884E;
+    --gold-lt:#E7C98F;
+    --paper:#F2EFE8;
+    --ink:#2B2622;
+    --ink-soft:#5A534B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Songti SC","Source Han Serif SC","Noto Serif CJK SC",serif;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 26px;}
+  .fade{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}
+  .fade.in{opacity:1;transform:none;}
+  /* ================= 1 封面 ================= */
+  .cover{
+    position:relative;
+    height:100vh;
+    min-height:600px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:linear-gradient(150deg,#A03830 0%,#7A231F 45%,#4E1613 100%);
+  }
+  .cover::before{
+    content:"";
+    position:absolute;inset:0;
+    opacity:.1;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events:none;
+  }
+  .cover .watermark{
+    position:absolute;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(220px,52vw,460px);
+    font-weight:700;
+    letter-spacing:.02em;
+    color:#F2EFE8;
+    opacity:.055;
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+    white-space:nowrap;
+  }
+  .cover .frame{
+    position:absolute;
+    inset:26px;
+    pointer-events:none;
+  }
+  .cover .frame::before,
+  .cover .frame::after,
+  .cover .frame span::before,
+  .cover .frame span::after{
+    content:"";
+    position:absolute;
+    width:34px;height:34px;
+    border-color:rgba(231,201,143,.42);
+    border-style:solid;
+    border-width:0;
+  }
+  .cover .frame::before{top:0;left:0;border-top-width:1px;border-left-width:1px;}
+  .cover .frame::after{top:0;right:0;border-top-width:1px;border-right-width:1px;}
+  .cover .frame span::before{bottom:0;left:0;border-bottom-width:1px;border-left-width:1px;}
+  .cover .frame span::after{bottom:0;right:0;border-bottom-width:1px;border-right-width:1px;}
+  .cover-inner{
+    position:relative;
+    z-index:3;
+    width:100%;
+    max-width:640px;
+    padding:0 34px;
+    text-align:center;
+    color:#F7F3EC;
+  }
+  .cover .masthead{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin-bottom:46px;
+  }
+  .cover .masthead i{flex:1;height:1px;background:rgba(231,201,143,.45);max-width:70px;}
+  .cover .masthead span{font-size:12px;letter-spacing:.42em;color:var(--gold-lt);white-space:nowrap;}
+  .cover .title-wrap{display:inline-block;position:relative;padding-left:22px;text-align:left;}
+  .cover .title-wrap::before{
+    content:"";
+    position:absolute;
+    left:0;top:8px;bottom:14px;
+    width:1px;
+    background:rgba(231,201,143,.55);
+  }
+  .cover .title-en{
+    font-family:Georgia,serif;
+    font-size:10px;
+    letter-spacing:.3em;
+    color:rgba(231,201,143,.72);
+    margin-bottom:14px;
+    text-transform:uppercase;
+  }
+  .cover h1{
+    font-size:clamp(32px,7.4vw,56px);
+    line-height:1.45;
+    font-weight:600;
+    letter-spacing:.1em;
+    color:var(--gold-lt);
+  }
+  .cover .title-rule{
+    height:1px;
+    margin-top:20px;
+    background:linear-gradient(90deg,rgba(231,201,143,.8),rgba(231,201,143,.05));
+  }
+  .cover .keywords{
+    margin:44px auto 46px;
+    display:inline-flex;
+    align-items:center;
+    border-top:1px solid rgba(231,201,143,.28);
+    border-bottom:1px solid rgba(231,201,143,.28);
+    padding:13px 4px;
+  }
+  .cover .keywords b{
+    font-weight:400;
+    font-size:14px;
+    letter-spacing:.3em;
+    color:rgba(247,243,236,.9);
+    padding:0 18px;
+  }
+  .cover .keywords em{font-style:normal;color:rgba(231,201,143,.55);font-size:11px;}
+  .cover .meta{
+    display:grid;
+    grid-template-columns:1fr 1fr 1.5fr;
+    border-top:1px solid rgba(231,201,143,.3);
+    padding-top:20px;
+    text-align:left;
+  }
+  .cover .meta div{padding-right:14px;}
+  .cover .meta div+div{border-left:1px solid rgba(231,201,143,.28);padding-left:16px;}
+  .cover .meta .k{
+    font-size:9.5px;
+    letter-spacing:.26em;
+    color:rgba(231,201,143,.72);
+    display:block;
+    margin-bottom:6px;
+    font-family:Georgia,serif;
+  }
+  .cover .meta .v{
+    font-size:12.5px;
+    letter-spacing:.06em;
+    color:rgba(247,243,236,.9);
+    line-height:1.85;
+  }
+  @media(max-width:600px){
+    .cover .masthead{margin-bottom:34px;}
+    .cover .masthead span{letter-spacing:.26em;font-size:11px;}
+    .cover .keywords{margin:34px auto 36px;}
+    .cover .keywords b{padding:0 11px;font-size:12.5px;letter-spacing:.2em;}
+    .cover .meta{grid-template-columns:1fr;gap:14px;}
+    .cover .meta div+div{border-left:0;padding-left:0;border-top:1px solid rgba(231,201,143,.2);padding-top:12px;}
+    .cover .frame{inset:14px;}
+    .cover .frame::before,.cover .frame::after,
+    .cover .frame span::before,.cover .frame span::after{width:24px;height:24px;}
+  }
+  /* ================= 通用屏 ================= */
+  section{padding:88px 0;}
+  .sec-no{font-family:Georgia,serif;font-size:12px;letter-spacing:.34em;color:var(--gold);margin-bottom:14px;}
+  h2{font-size:clamp(22px,4.6vw,30px);font-weight:600;letter-spacing:.05em;line-height:1.5;margin-bottom:10px;}
+  h2 .en{display:block;font-family:Georgia,serif;font-size:11px;letter-spacing:.24em;color:var(--ink-soft);font-weight:400;margin-top:8px;text-transform:uppercase;}
+  .lead{font-size:15px;color:var(--ink-soft);margin-bottom:34px;letter-spacing:.02em;}
+  .body p{font-size:16px;margin-bottom:16px;text-align:justify;}
+  .body b{color:var(--red);font-weight:600;}
+  .note{font-size:12.5px;color:var(--ink-soft);border-left:2px solid var(--gold);padding-left:12px;margin-top:22px;line-height:1.85;}
+  figure{margin:30px 0;}
+  figure img{width:100%;display:block;border-radius:2px;}
+  figcaption{font-size:12px;color:var(--ink-soft);margin-top:9px;letter-spacing:.04em;line-height:1.7;}
+  .tl{list-style:none;margin:28px 0 0;border-left:1px solid rgba(140,43,39,.28);padding-left:22px;}
+  .tl li{position:relative;padding-bottom:20px;font-size:15px;}
+  .tl li::before{content:"";position:absolute;left:-27px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--red);}
+  .tl .d{font-family:Georgia,serif;color:var(--red);letter-spacing:.06em;font-weight:600;margin-right:10px;}
+  .route{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:28px 0;}
+  .route-item{background:rgba(140,43,39,.06);padding:16px 14px;border-top:2px solid var(--red);}
+  .route-item .n{font-family:Georgia,serif;color:var(--red);font-size:12px;letter-spacing:.2em;}
+  .route-item h3{font-size:15px;margin:7px 0 6px;font-weight:600;letter-spacing:.04em;}
+  .route-item p{font-size:12.5px;color:var(--ink-soft);line-height:1.75;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;}
+  .grid2 figure{margin:0;}
+  .grid2 figure:nth-child(even){margin-top:26px;}
+  .quote{background:var(--red-deep);color:#F5EFE6;padding:76px 30px;text-align:center;}
+  .quote .q{font-size:clamp(19px,4.2vw,26px);line-height:1.95;letter-spacing:.05em;max-width:620px;margin:0 auto;}
+  .quote .q em{font-style:normal;color:var(--gold-lt);}
+  .quote .by{font-size:12px;letter-spacing:.24em;color:rgba(245,239,230,.6);margin-top:26px;}
+  .end{text-align:center;padding:100px 0 110px;background:var(--paper);}
+  .end .mark{font-size:22px;color:var(--gold);letter-spacing:.4em;margin-bottom:22px;}
+  .end p{font-size:15.5px;color:var(--ink-soft);max-width:520px;margin:0 auto 12px;line-height:2.05;}
+  .end .sign{margin-top:36px;font-size:13px;letter-spacing:.14em;color:var(--ink);line-height:2;}
+  .end .sign span{color:var(--red);}
+  @media(max-width:600px){
+    section{padding:64px 0;}
+    .route{grid-template-columns:1fr;}
+    .grid2{grid-template-columns:1fr;}
+    .grid2 figure:nth-child(even){margin-top:0;}
+  }
+</style>
+</head>
+<body>
+<!-- ================= 1 封面 ================= -->
+<header class="cover">
+  <div class="watermark">1925</div>
+  <div class="frame"><span></span></div>
+  <div class="cover-inner">
+    <div class="masthead">
+      <i></i><span>苏 州 · 红 色 研 学 纪 实</span><i></i>
+    </div>
+    <div class="title-wrap">
+      <div class="title-en">Research Notes · 2026</div>
+      <h1>一条路<br>一栋楼<br>一座馆</h1>
+      <div class="title-rule"></div>
+    </div>
+    <div class="keywords">
+      <b>道 路</b><em>·</em>
+      <b>旧 址</b><em>·</em>
+      <b>展 厅</b>
+    </div>
+    <div class="meta">
+      <div>
+        <span class="k">DATE</span>
+        <div class="v">2026.11.07</div>
+      </div>
+      <div>
+        <span class="k">GROUP</span>
+        <div class="v">26汉语言文学1班</div>
+      </div>
+      <div>
+        <span class="k">MEMBERS</span>
+        <div class="v">熊国艳　高瑞桦<br>王悦　　王雨萱</div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- ================= 2 缘起 ================= -->
+<section class="wrap fade">
+  <div class="sec-no">02 / 缘 起</div>
+  <h2>一条路、一栋楼、一座馆<span class="en">The Route</span></h2>
+  <p class="lead">从城市的街道走到校园的旧址，再走进展厅，三个点位串成一条时间线。</p>
+  <div class="body">
+    <p>五卅路是这条路的名字，也是一场运动留在苏州的名字；乐益女中的那栋楼，是苏州城内最早的党组织成立的地方；苏州革命博物馆，则把散落在城市里的细节收拢进一个展厅。</p>
+    <p>走完这三个点位，我们才明白：<b>历史并不只在玻璃展柜里，它也就在我们每天路过的街口。</b></p>
+  </div>
+  <div class="route">
+    <div class="route-item">
+      <div class="n">POINT 01</div>
+      <h3>五卅路</h3>
+      <p>全国唯一以五卅运动命名的道路，全长约970米。</p>
+    </div>
+    <div class="route-item">
+      <div class="n">POINT 02</div>
+      <h3>独立支部旧址</h3>
+      <p>乐益女中旧址，江苏境内最早的独立支部之一。</p>
+    </div>
+    <div class="route-item">
+      <div class="n">POINT 03</div>
+      <h3>苏州革命博物馆</h3>
+      <p>三展厅基本陈列《光辉历程 苏州篇章》。</p>
+    </div>
+  </div>
+  <figure>
+    <img src="./01-laolou.png" alt="中山教育老楼">
+    <figcaption>老城檐口与新式墙面的接缝，苏州街巷常见的层叠痕迹。摄于研学途中。</figcaption>
+  </figure>
+</section>
+<!-- ================= 3 五卅路 ================= -->
+<section class="wrap fade">
+  <div class="sec-no">03 / 第 一 站</div>
+  <h2>五卅路：一条被命名的路<span class="en">Wusa Road</span></h2>
+  <p class="lead">从募捐，到翻修一条小路，再到路口的一块碑。城市用一个路名，记住了1925年。</p>
+  <figure>
+    <img src="./02-jinianbei.png" alt="五卅路纪念碑">
+    <figcaption>五卅路纪念碑，位于五卅路与民治路口，1985年五卅运动60周年时由原界石移置而来。</figcaption>
+  </figure>
+  <div class="body">
+    <p>1925年5月30日，上海发生五卅惨案。消息传到苏州，学生们最先动了起来：罢课、集会、街头演讲，市民也加入募捐。短短数日，苏州各界共募集近两万元送往上海，支援罢工工人。</p>
+    <p>后来上海方面退回其中6000元。7月10日，苏州各界联合会决定用这笔余款翻修一条石板小路，并把它命名为<b>“五卅路”</b>。1926年5月30日，五卅运动周年之际，两方“五卅路纪念界石”立了起来。</p>
+    <p>1985年，界石被移到民治路口，并镌刻成今天的纪念碑。这条路全长约970米，是<b>全国唯一一条以五卅运动命名的道路</b>。</p>
+  </div>
+  <ul class="tl">
+    <li><span class="d">1925.06</span>苏州各界声援上海，募捐近2万元</li>
+    <li><span class="d">1925.07.10</span>决定以余款翻修马军弄，定名“五卅路”</li>
+    <li><span class="d">1926.05.30</span>立“五卅路纪念界石”</li>
+    <li><span class="d">1985</span>界石移至民治路口，镌刻为纪念碑</li>
+  </ul>
+  <div class="note">
+    现场观察：碑身不高，藏在梧桐树影里，旁边就是正常的街市生活。它没有被围起来，也没有被特殊对待；正是这样，它更像一条“活着的路”，而不是一处“景点”。
+  </div>
+  <figure>
+    <img src="./03-zhanban.png" alt="五卅风暴中的苏州 展板">
+    <figcaption>馆内“五卅风暴中的苏州”展板，与路上那块碑互为印证。摄于苏州革命博物馆。</figcaption>
+  </figure>
+</section>
+<!-- ================= 4 独立支部 ================= -->
+<section class="wrap fade">
+  <div class="sec-no">04 / 第 二 站</div>
+  <h2>一栋楼里的第一步<span class="en">The First Branch</span></h2>
+  <p class="lead">1925年9月，三个年轻人在乐益女中秘密开会，苏州有了第一个独立支部。</p>
+  <figure>
+    <img src="./04-jiuzhi.png" alt="旧址门楼">
+    <figcaption>乐益女中旧址门楼，山花中央为五角星浮雕。摄于研学现场。</figcaption>
+  </figure>
+  <div class="body">
+    <p>1925年9月初，<b>侯绍裘、张闻天、叶天底</b>三人在乐益女中秘密成立中共苏州独立支部。叶天底任书记，张闻天负责宣传工作。到当年年底，党员发展到<b>24人</b>。</p>
+    <p>乐益女中是当时苏州一所新式女子学校，校舍本身并不宏大，但它提供了一个相对隐蔽的场地，革命的火种才得以在课堂与走廊之间悄悄传开。这是<b>江苏境内最早的独立支部之一</b>。</p>
+  </div>
+  <div class="note">
+    现场观察：门楼的装饰带着明显的西式风格，五角星嵌在花纹之间。一百年前的“秘密”，如今就立在这栋楼的立面之上；安静，但很具体。
+  </div>
+</section>
+<!-- ================= 5 革命博物馆 ================= -->
+<section class="wrap fade">
+  <div class="sec-no">05 / 第 三 站</div>
+  <h2>把散点收进一个展厅<span class="en">Suzhou Revolutionary Museum</span></h2>
+  <p class="lead">三展厅、870余张照片、360余件文物。散在城里的细节被收拢在一起，看清了全貌。</p>
+  <figure>
+    <img src="./05-bowuguan.png" alt="苏州革命博物馆正门">
+    <figcaption>苏州革命博物馆正门，仿古城墙式门楼，匾额为繁体“蘇州革命博物館”。</figcaption>
+  </figure>
+  <div class="body">
+    <p>博物馆的基本陈列名为<b>《光辉历程 苏州篇章》</b>，共分三个展厅，展出照片870余张、文物360余件。从晚清民初的社会变迁，到中共苏州地方组织的建立，再到抗战时期的活动，脉络清晰。</p>
+    <p>展厅里有一座<b>半景画《阳澄烽火》</b>，还原了洋沟溇战斗的场景。画面前景配合实物与灯光，是整馆最有现场感的一处。</p>
+  </div>
+  <div class="grid2">
+    <figure>
+      <img src="./06-huilian.png" alt="惠廉回忆录">
+      <figcaption>惠廉回忆录《毛泽东到苏州》手稿，多处红笔批注。</figcaption>
+    </figure>
+    <figure>
+      <img src="./07-liyingmo.png" alt="李建模烈士遗物">
+      <figcaption>李建模烈士遗物——砚台与亲笔信，展出者为家书原件。</figcaption>
+    </figure>
+    <figure>
+      <img src="./08-changjing.png" alt="场景复原">
+      <figcaption>苏南地区革命活动场景复原，围桌研究部署的群像。</figcaption>
+    </figure>
+    <figure>
+      <img src="./09-meishuguan.png" alt="苏州美术馆展品">
+      <figcaption>苏州美术馆展厅内的折扇与工艺摆件，同一区域的文化记忆。</figcaption>
+    </figure>
+  </div>
+</section>
+<!-- ================= 6 研学思考 ================= -->
+<section class="quote fade">
+  <div class="sec-no" style="color:#E7C98F">06 / 研 学 思 考</div>
+  <div class="q">
+    红色叙事最难的，不是讲得<em>动情</em>，<br>
+    而是讲得<em>不费力</em>——<br>
+    让一条路只是路，让一个人先变回人。
+  </div>
+  <div class="by">结 合 汉 语 言 文 学 · 文 旅 宣 传 专 业 视 角</div>
+</section>
+<section class="wrap fade">
+  <div class="body">
+    <p>我们这次最直接的感受是：<b>五卅路的碑，比展板上的五卅路更打动人</b>。因为它长在生活里：旁边是梧桐、是买菜的人、是放学经过的孩子。故事不需要被讲得很用力，它就在那儿。</p>
+    <p>对文旅宣传来说，这提示了两点：</p>
+    <p>第一，<b>先给场景，再给意义</b>。先让人看到路口的那块碑、看到树影落在石面上，观众才有兴趣追问“这是什么”。倒过来先喊口号，往往没人愿意停下来。</p>
+    <p>第二，<b>把宏大叙事拆成可触摸的细节</b>。一封家书、一件旧砚台、一份手稿上的红笔批注，比一句概括更有重量。我们在“李建模烈士遗物”前停留最久，就是因为那页信纸上有真实的笔迹。</p>
+    <p>汉语言文学给我们的训练，是把话说准；研学给我们的提醒，是把话说轻。两者结合，或许才是红色叙事“不费力”的方式。</p>
+  </div>
+</section>
+<!-- ================= 7 结语 ================= -->
+<section class="end fade">
+  <div class="mark">· · ·</div>
+  <p>11月7日，我们走过一条路，看了一栋楼，进了一座馆。</p>
+  <p>离开的时候天色已晚，路口那块碑还立在树影下。它不解释什么，但路过的人总会多看它一眼。</p>
+  <div class="sign">
+    2026汉语言文学1班 · 11.7 研学<br>
+    小组：<span>熊国艳　高瑞桦　王悦　王雨萱</span>
+  </div>
+</section>
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
